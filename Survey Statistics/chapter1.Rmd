@@ -1,0 +1,214 @@
+---
+title_meta  : Chapter 1
+title       : Survey Statistics
+description : Introduction to Survey Statistics
+
+---
+## Welcome to an introduction to Survey Statistics
+
+In this course you will learn methods frequently used to manage and analyze survey data. Survey data is used in a variety of fields including Public Health, Economics, Political Science, and Data Science. The US Census, the National Health Interview Survey, The National Health and Nutrition Examination Survey, The California Health Interview Survey, and Nielsen Ratings are some examples of survey datasets. 
+
+R is well suited to handle survey statistics using the "survey" package developed by Thomas Lumley. Lumley's book "Complex Surveys: A guide to Analysis Using R" is the main resource for this course, and it is highly recommended.
+
+
+
+*** =instructions
+- Run the code that installs and loads the survey package.
+
+
+*** =sample_code
+```{r,eval=FALSE}
+install.packages("survey")
+library("survey")
+```
+
+*** =sct
+```{r,eval=FALSE}
+# The Submission Correctness Test code
+# It takes as input the students workspace, his code and what was printed to the console during the exercise.
+# Based on these inputs the SCT returns:
+# (i) whether the students code was correct
+# (ii) a message to the student to either help him find what was wrong or congratulate him on finding the solution.
+success_msg("Well done! Continue!")
+```
+
+---
+## Take a Look at a Survey
+
+In this exercise we will look at survey. In the workspace there is a dataframe named apisrs. 
+
+*** =instructions
+- Look at the first 5 rows and the structure of apisrs.
+
+
+*** =hint
+
+
+*** =pre_exercise_code
+```{r,eval=FALSE}
+install.packages("survey")
+library("survey")
+data(api)
+```
+
+*** =sample_code
+```{r,eval=FALSE}
+# Assign the value 5 to 'x'
+
+
+# Assign 'y' to 'z'
+
+```
+
+*** =solution
+```{r,eval=FALSE}
+# Assign the value 5 to 'x'
+x <- 5
+
+# Assign 'y' to 'z'
+z <- y
+```
+
+*** =sct
+```{r,eval=FALSE}
+test_object("x", undefined_msg = "Are you sure you have defined the variable <code>x</code>?",
+            incorrect_msg = "Make sure to correctly specify the variable <code>x</code>")
+test_object("z", undefined_msg = "Are you sure you have defined the variable <code>y</code>?",
+            incorrect_msg = "Make sure to correctly specify the variable <code>y</code>")
+success_msg("Awesome job! Continue to the next exercise")
+```
+
+--- type:MultipleChoiceExercise
+## This is a multiple choice exercise!
+
+The multiple choice exercise (remark the `type:` specification after the triple dashes above the title) does not need sample code, nor a solution.
+
+*** =instructions
+- Wrong option
+- Correct option 
+- Wrong option
+  
+*** =hint
+Hint here. 
+
+*** =pre_exercise_code
+```{r,eval=FALSE}
+```
+
+*** =sct
+```{r,eval=FALSE}
+test_mc(correct = 2, feedback_msgs = c("Wrong, try again.","Good job!","Try again please"))
+```
+
+--- type:VideoExercise
+## This exercise contains a video!
+
+You can add a description here, but this is optional.
+
+*** =video_link
+```{r,eval=FALSE}
+//player.vimeo.com/video/108225030
+```
+
+--- type:MarkdownExercise
+## Markdown Exercise Title
+ 
+The assignment of this markdown exercise (remark the `type:` specification after the triple dashes above the title) comes here.
+Custom CSS is an easy way to add branding to your reports. 
+
+*** =instructions
+- The `styles.css` file to the right contains some example CSS that will change the appearance of your report. Modify the header of the .Rmd report to use the CSS, and then render the report.
+- In the code chunk, assign `5` to the variable `x`.
+
+*** =hint 
+This exercise only expect you to edit the YAML header, not the actual .css file.
+
+*** =pre_exercise_code
+```{r eval=FALSE}
+```
+
+*** =sample_code
+```{r eval=FALSE}
+{{{my_document.Rmd}}}
+---
+title: "Tryout"
+output: html_document
+---
+
+This sample R Markdown document contains a list:
+  
+* A
+* B
+
+It also contains some code:
+  
+_tbt_{r}
+x <-
+_tbt_
+```
+
+```{r, eval = FALSE}
+{{{styles.css}}}
+h1{
+  color: white;
+  padding: 10px;
+  background-color: #3399ff
+}
+
+ul {
+  list-style-type: square;  
+}
+```
+
+*** =solution
+
+```{r eval=FALSE}
+{{{my_solution.Rmd}}}
+---
+title: "Tryout"
+output: 
+  html_document:
+    css: styles.css
+---
+
+This sample R Markdown document contains a list:
+  
+* A
+* B
+
+It also contains some code:
+  
+_tbt_{r}
+x <- 5
+_tbt_
+```
+
+```{r, eval = FALSE}
+{{{styles.css}}}
+h1{
+  color: white;
+  padding: 10px;
+  background-color: #3399ff
+}
+
+ul {
+  list-style-type: square;  
+}
+```
+
+*** =sct
+```{r eval=FALSE}
+test_error()
+test_rmd_file({
+  test_yaml_header(options = "title")
+  test_yaml_header(options = "output.html_document.css", 
+                   not_called_msg = "Have you specified the <code>css</code> option under <code>html_document</code>, which in turn is under option <code>output</code>?", 
+                   incorrect_msg = "Make sure to set the <code>css</code> option correctly.")
+  test_rmd_group(2, {
+    test_object("x", 
+                undefined_msg = "Have you defined the variable <code>x</code> inside the code chunk?", 
+                incorrect_msg = "Make sure to define the variable <code>x</code> correctly inside the code chunk.")
+  })
+})
+success_msg("Nice work! It's easy to add styling to your report!")  
+```
