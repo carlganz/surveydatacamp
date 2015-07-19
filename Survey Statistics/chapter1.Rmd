@@ -1,11 +1,11 @@
 ---
 title_meta  : Chapter 1
-title       : Survey Statistics
-description : Introduction to Survey Statistics
+title       : Introduction to the Simple Random Sample
+description : We introduce the concepts of survey statistics by looking at a simple random sample.
 
 ---type:NormalExercise xp:100
 
-## Welcome to an introduction to Survey Statistics
+## Welcome to Survey Statistics
 
 In this course you will learn methods frequently used to manage and analyze survey data. Survey data is used in a variety of fields including Public Health, Economics, Political Science, and Data Science. The US Census, the National Health Interview Survey, The National Health and Nutrition Examination Survey, The California Health Interview Survey, Nielsen Ratings, and Election Polling are some examples of survey datasets. 
 
