@@ -97,7 +97,9 @@ test_mc(correct = 2, feedback_msgs = c(msg1,msg2,msg1,msg1))</code></pre>
 </div>
 <div id="sampling-weights" class="section level2">
 <h2>Sampling Weights</h2>
-<p>One of the main concepts of survey statistics is sampling weights. The formula for sampling weights is <span class="math">\[ sampling weight=\frac{1}{\pi_i} \]</span> Where <span class="math">\(\pi_i\)</span> is the probability of person <em>i</em> being sampled.</p>
+<p>One of the main concepts of survey statistics is sampling weights. The formula for sampling weights is</p>
+<p><span class="math">\[ sampling weight=\frac{1}{\pi_i} \]</span></p>
+<p>Where <span class="math">\(\pi_i\)</span> is the probability of person <em>i</em> being sampled.</p>
 <p>Consider the example from the previous problem. Each student has a <span class="math">\(\pi_i=\frac{1}{5}\)</span> so the sampling weight equals <span class="math">\(5\)</span>.</p>
 <p>*** =instructions -Already loaded is a dataset with the test scores of 200 students. -Look at the first 5 rows and the structure of the dataset. -Set the variable <code>{r} samplingWeight</code> equal to the correct value.</p>
 <p>*** =hint If you don’t remember the head and str functions use ?</p>
@@ -109,6 +111,7 @@ test_mc(correct = 2, feedback_msgs = c(msg1,msg2,msg1,msg1))</code></pre>
 
 
 # Read the structure of schoolkids
+
 
 # Set samplingWeight equal to the sampling weight
 samplingWeight&lt;-_____</code></pre>
@@ -131,13 +134,15 @@ test_object(str(schoolkids), undefined_msg=&quot;Please look at the structure of
 test_object(samplingWeight&lt;-5, undefined_msg=&quot;Please assign a value to samplingWeight.&quot;,
             incorrect_msg=&quot;Did you assign the correct value to samplingWeight?&quot;)
 success_msg(&quot;Great! Head over to the next exercise.&quot;)</code></pre>
+<p>—type:NormalExercise xp:100</p>
 </div>
-<div id="horvits-thompson-estimator" class="section level1">
-<h1>Horvits-Thompson Estimator</h1>
+<div id="horvits-thompson-estimator" class="section level2">
+<h2>Horvits-Thompson Estimator</h2>
 <p>The Horvits-Thompson estimator approximates the population total by summing the weighted observations. Continueing with the previous example, the formula for the Horvits-Thompson estimator of total student test scores is</p>
 <p><span class="math">\(E[T_{score}]=\sum\limits_{i=1}^N \frac{1}{\pi_i} * score_i * \pi_i=\sum\limits_{i=1}^N score_i= T_{score}\)</span></p>
 <p>*** =instructions -Add a variable to the dataset named <code>{r}samplingweight</code> that is equal to the <code>{r}samplingweight</code> variable you created in the last exercise.</p>
-<p>*** =hint</p>
+<p>-Using the Horvits-Thompson Estimator, predict the total number of boys and girls at the school.</p>
+<p>*** =hint The Horvits-Thompson Estimator formula in <em>R</em> code looks like <code>{r} samplingWeight*sum(x)</code></p>
 <p>*** =pre_exercise_code</p>
 <pre class="r"><code>schoolkids&lt;-read.csv(&quot;childdata.csv&quot;)
 samplingWeight&lt;-5</code></pre>
@@ -146,19 +151,66 @@ samplingWeight&lt;-5</code></pre>
 # The variable samplingWeight is already loaded
 
 # Create a new variable in schoolkids equal to samplingWeight
-schoolkids$samplingWeight&lt;-_____</code></pre>
+schoolkids$samplingWeight&lt;-_____
+
+# Assign the sum of the students' scores multiplied by their weights
+totalMales&lt;-_____
+totalFemales&lt;-_____
+#Print out the results</code></pre>
 <p>*** =solution</p>
 <pre class="r"><code># The dataframe schoolkids is already loaded
 # The variable samplingWeight is already loaded
 
 # Create a new variable in schoolkids equal to samplingWeight
-schoolkids$samplingWeight&lt;-samplingWeight</code></pre>
+schoolkids$samplingWeight&lt;-samplingWeight
+
+# Assign the sum of the students' scores multiplied by their weights
+totalMales&lt;-samplingWeight*sum(schoolkids$gender==&quot;Male&quot;)
+totalFemales&lt;-samplingWeight*sum(schoolkids$gender==&quot;Female&quot;)
+# Print out the results
+totalMales
+totalFemales</code></pre>
 <p>*** =sct</p>
 <pre class="r"><code>test_object(schoolkids$samplingWeight&lt;-samplingWeight, 
             undefined_msg = &quot;Did you assign a value to schoolkids$samplingWeight?&quot;,
-            incorrect_msg = &quot;&quot;)
+            incorrect_msg = &quot;Did you use samplingWeight?&quot;)
+test_object(totalMales&lt;-samplingWeight*sum(schoolkids$gender==&quot;Male&quot;), 
+            undefined_msg = &quot;Did you assign a value to totalMales?&quot;,
+            incorrect_msg = &quot;Did you use samplingWeight times the number of males in the sample?&quot;)
+test_object(totalFemales&lt;-samplingWeight*sum(schoolkids$gender==&quot;Female&quot;), 
+            undefined_msg = &quot;Did you assign a value to totalFemales?&quot;,
+            incorrect_msg = &quot;Did you use samplingWeight times the number of females in the sample?&quot;)
+test_object(totalMales), 
+            undefined_msg = &quot;Did you print totalMales?&quot;,
+            incorrect_msg = &quot;Did you use samplingWeight times the number of males in the sample?&quot;)
+test_object(totalFemales), 
+            undefined_msg = &quot;Did you print totalFemales?&quot;,
+            incorrect_msg = &quot;Did you use samplingWeight times the number of females in the sample?&quot;)
+success_msg(&quot;Great! But remember that our result is just an estimate.&quot;)</code></pre>
+<p>—type:NormalExercise xp:100</p>
+</div>
+<div id="variance-of-horvits-thompson-estimator" class="section level2">
+<h2>Variance of Horvits-Thompson Estimator</h2>
+<p>Keep in mind that the results from the previous exercise are purely estimates. Let’s look at the variance so that we can get a sense of how good an estimate we have.</p>
+<p>The formula for the variance of the Horvits-Thompson Estimator of a population total for a random sample of n people from a population of N:</p>
+<p><span class="math">\[ var[T_x]=\frac{(N-n)}{N}*N^2*\frac{var(x)}{n} \]</span></p>
+<p>*** =instructions -Placeholder</p>
+<p>*** =hint</p>
+<p>*** =pre_exercise_code</p>
+<pre class="r"><code>schoolkids&lt;-read.csv(&quot;childdata.csv&quot;)
+samplingWeight&lt;-5</code></pre>
+<p>*** =sample_code</p>
+<pre class="r"><code># The dataframe schoolkids is already loaded
+# The variable samplingWeight is already loaded</code></pre>
+<p>*** =solution</p>
+<pre class="r"><code># The dataframe schoolkids is already loaded
+# The variable samplingWeight is already loaded</code></pre>
+<p>*** =sct</p>
+<pre class="r"><code>test_object(schoolkids$samplingWeight&lt;-samplingWeight, 
+            undefined_msg = &quot;Did you assign a value to schoolkids$samplingWeight?&quot;,
+            incorrect_msg = &quot;Did you use samplingWeight?&quot;)
 
-success_msg(&quot;Great! Head over to the next exercise.&quot;)</code></pre>
+success_msg(&quot;Great! &quot;)</code></pre>
 </div>
 
 

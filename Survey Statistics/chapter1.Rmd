@@ -65,7 +65,11 @@ test_mc(correct = 2, feedback_msgs = c(msg1,msg2,msg1,msg1))
 
 ## Sampling Weights
 
-One of the main concepts of survey statistics is sampling weights. The formula for sampling weights is $$ sampling weight=\frac{1}{\pi_i} $$ Where $\pi_i$ is the probability of person *i* being sampled.
+One of the main concepts of survey statistics is sampling weights. The formula for sampling weights is 
+
+$$ sampling weight=\frac{1}{\pi_i} $$ 
+
+Where $\pi_i$ is the probability of person *i* being sampled.
 
 Consider the example from the previous problem. Each student has a $\pi_i=\frac{1}{5}$ so the sampling weight equals $5$.
 
@@ -89,6 +93,7 @@ schoolkids<-read.csv("childdata.csv")
 
 
 # Read the structure of schoolkids
+
 
 # Set samplingWeight equal to the sampling weight
 samplingWeight<-_____
@@ -120,8 +125,9 @@ test_object(samplingWeight<-5, undefined_msg="Please assign a value to samplingW
             incorrect_msg="Did you assign the correct value to samplingWeight?")
 success_msg("Great! Head over to the next exercise.")
 ```
+---type:NormalExercise xp:100
 
-#Horvits-Thompson Estimator
+## Horvits-Thompson Estimator
 
 The Horvits-Thompson estimator approximates the population total by summing the weighted observations. Continueing with the previous example, the formula for the Horvits-Thompson estimator of total student test scores is
 
@@ -129,11 +135,11 @@ $E[T_{score}]=\sum\limits_{i=1}^N \frac{1}{\pi_i} * score_i * \pi_i=\sum\limits_
 
 *** =instructions
 -Add a variable to the dataset named `{r}samplingweight` that is equal to the `{r}samplingweight` variable you created in the last exercise.
--Using the Horvits-Thompson Estimator and set the variable `{r} totalScore` equal to the estimtated total score of the school.
--Estimate the average score for the school.
+
+-Using the Horvits-Thompson Estimator, predict the total number of boys and girls at the school.
 
 *** =hint
-The Horvits-Thompson Estimator formula in *R* code looks like `{r} sum(samplingWeight*score)`
+The Horvits-Thompson Estimator formula in *R* code looks like `{r} samplingWeight*sum(x)`
 
 *** =pre_exercise_code
 ```{r eval=FALSE}
@@ -150,10 +156,10 @@ samplingWeight<-5
 schoolkids$samplingWeight<-_____
 
 # Assign the sum of the students' scores multiplied by their weights
-totalScore<-sum(_____)
+totalMales<-_____
+totalFemales<-_____
+#Print out the results
 
-# Estimate the average for the whole school. Remember there are 1000 students
-scoreAverage<-_____
 
 ```
 
@@ -166,10 +172,70 @@ scoreAverage<-_____
 schoolkids$samplingWeight<-samplingWeight
 
 # Assign the sum of the students' scores multiplied by their weights
-totalScore<-sum(schoolkids$score*schoolkids$samplingWeight)
+totalMales<-samplingWeight*sum(schoolkids$gender=="Male")
+totalFemales<-samplingWeight*sum(schoolkids$gender=="Female")
+# Print out the results
+totalMales
+totalFemales
 
-# Estimate the average for the whole school. Remember there are 1000 students
-scoreAverage<-totalScore/1000
+```
+
+*** =sct
+```{r eval=FALSE}
+test_object(schoolkids$samplingWeight<-samplingWeight, 
+            undefined_msg = "Did you assign a value to schoolkids$samplingWeight?",
+            incorrect_msg = "Did you use samplingWeight?")
+test_object(totalMales<-samplingWeight*sum(schoolkids$gender=="Male"), 
+            undefined_msg = "Did you assign a value to totalMales?",
+            incorrect_msg = "Did you use samplingWeight times the number of males in the sample?")
+test_object(totalFemales<-samplingWeight*sum(schoolkids$gender=="Female"), 
+            undefined_msg = "Did you assign a value to totalFemales?",
+            incorrect_msg = "Did you use samplingWeight times the number of females in the sample?")
+test_object(totalMales), 
+            undefined_msg = "Did you print totalMales?",
+            incorrect_msg = "Did you use samplingWeight times the number of males in the sample?")
+test_object(totalFemales), 
+            undefined_msg = "Did you print totalFemales?",
+            incorrect_msg = "Did you use samplingWeight times the number of females in the sample?")
+success_msg("Great! But remember that our result is just an estimate.")
+```
+---type:NormalExercise xp:100
+
+## Variance of Horvits-Thompson Estimator
+
+Keep in mind that the results from the previous exercise are purely estimates. Let's look at the variance so that we can get a sense of how good an estimate we have.
+
+The formula for the variance of the Horvits-Thompson Estimator of a population total for a variable x from a random sample of n people from a population of N:
+
+$$ var[T_x]=\frac{(N-n)}{N}*N^2*\frac{var(x)}{n} $$
+
+*** =instructions
+-Placeholder
+
+
+*** =hint
+
+
+*** =pre_exercise_code
+```{r eval=FALSE}
+schoolkids<-read.csv("childdata.csv")
+samplingWeight<-5
+```
+
+*** =sample_code
+```{r eval=FALSE}
+# The dataframe schoolkids is already loaded
+# The variable samplingWeight is already loaded
+
+
+```
+
+*** =solution
+```{r eval=FALSE}
+# The dataframe schoolkids is already loaded
+# The variable samplingWeight is already loaded
+
+
 
 ```
 
@@ -179,5 +245,9 @@ test_object(schoolkids$samplingWeight<-samplingWeight,
             undefined_msg = "Did you assign a value to schoolkids$samplingWeight?",
             incorrect_msg = "Did you use samplingWeight?")
 
-success_msg("Great! But remember that our result is just an estimate.")
+success_msg("Great! ")
 ```
+
+
+
+
