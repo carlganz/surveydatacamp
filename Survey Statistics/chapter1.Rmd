@@ -74,9 +74,9 @@ Where $$\pi_i$$ is the probability of person *i* being sampled.
 Consider the example from the previous problem. Each student has a $$\pi_i=\frac{1}{5}$$ so the sampling weight equals $$5$$.
 
 *** =instructions
--Already loaded is a dataset with the test scores of 200 students.
--Look at the first 5 rows and the structure of the dataset.
--Set the variable `{r} samplingWeight` equal to the correct value. 
+- Already loaded is a dataset with the test scores of 200 students.
+- Look at the first 5 rows and the structure of the dataset.
+- Set the variable `{r} samplingWeight` equal to the correct value. 
 
 *** =hint
 If you don't remember the head and str functions use ?
@@ -134,7 +134,7 @@ The Horvits-Thompson estimator approximates the population total by summing the 
 $$E[T_{score}]=\sum\limits_{i=1}^N \frac{1}{\pi_i} * score_i * \pi_i=\sum\limits_{i=1}^N score_i= T_{score}$$
 
 *** =instructions
--Add a variable to the dataset named `{r}samplingweight` that is equal to the `{r}samplingweight` variable you created in the last exercise.
+- Add a variable to the dataset named `{r}samplingweight` that is equal to the `{r}samplingweight` variable you created in the last exercise.
 
 -Using the Horvits-Thompson Estimator, predict the total number of boys and girls at the school.
 
@@ -205,49 +205,153 @@ success_msg("Great! But remember that our result is just an estimate.")
 
 Keep in mind that the results from the previous exercise are purely estimates. Let's look at the variance so that we can get a sense of how good an estimate we have.
 
-The formula for the variance of the Horvits-Thompson Estimator of a population total for a variable x from a random sample of n people from a population of N:
+The formula for the variance of the Horvits-Thompson Estimator of the a population total for a variable x:
+
+$$ var[T_x]=\sum\limits_{i,j} (\frac{x_i*x_j}{\pi_{ij}}-\frac{x_i*x_j}{\pi_i*\pi_j}) $$
+
+The formula for the variance of the Horvits-Thompson Estimator where you have a simple random sample of n from N:
 
 $$ var[T_x]=\frac{(N-n)}{N}*N^2*\frac{var(x)}{n} $$
 
-*** =instructions
--Placeholder
+Showing that the second formula is equivalent to the first for a simple random sample is an extra credit exercise left to you.
 
+The standard error is the square root of the variance. We can build 95% confidence intervals by addind and substracting $$1.96*standard error$$ from the total estimate.
+
+*** =instructions
+- Using the formula for the variance of the Horvits-Thompson estimator for a simple random sample, find the standard error for gender.
+- Then use the standard error to find confidence intervals for the total number of boys and girls.
 
 *** =hint
-
+Remember the sample has 200 out of 1000 people. Also remember the var(x) from the formula is equivalent to `{r} var(schoolkids$gender)`
 
 *** =pre_exercise_code
 ```{r eval=FALSE}
 schoolkids<-read.csv("childdata.csv")
-samplingWeight<-5
+schoolkids$samplingWeight<-5
+totalMales<-samplingWeight*sum(schoolkids$gender=="Male")
+totalFemales<-samplingWeight*sum(schoolkids$gender=="Female")
 ```
 
 *** =sample_code
 ```{r eval=FALSE}
 # The dataframe schoolkids is already loaded
-# The variable samplingWeight is already loaded
+# The variables totalMales and totalFemales are already loaded
 
+# Find the standard error for gender
+stdErrGender<-sqrt(_____)
+
+# Print the upper and lower confidence intervals for the total number of males and females
+maleUpperCI<-1.96*_____+_____
+maleLowerCI<-1.96*_____-_____
+
+femaleUpperCI<-1.96*_____+_____
+femaleLowerCI<-1.96*_____-_____
+
+# Print out the intervals
 
 ```
 
 *** =solution
 ```{r eval=FALSE}
 # The dataframe schoolkids is already loaded
-# The variable samplingWeight is already loaded
+# The variables totalMales and totalFemales are already loaded
 
+# Find the standard error for gender
+stdErrGender<-sqrt(((1000-200)/1000)*1000^2*(var(schoolkids$gender)/200))
 
+# Print the upper and lower confidence intervals for the total number of males and females
+maleUpperCI<-1.96*stdErrGender+totalMales
+maleLowerCI<-1.96*stdErrGender-totalMales
+
+femaleUpperCI<-1.96*stdErrGender+totalFemales
+femaleLowerCI<-1.96*stdErrGender-totalFemales
+
+# Print out the intervals
+maleUpperCI
+maleLowerCI
+femaleUpperCI
+femaleLowerCI
 
 ```
 
 *** =sct
 ```{r eval=FALSE}
-test_object(schoolkids$samplingWeight<-samplingWeight, 
+test_object(stdErrGender<-sqrt(((1000-200)/1000)*1000^2*(var(schoolkids$gender)/200)), 
+            undefined_msg = "Did you assign a value to schoolkids$samplingWeight?",
+            incorrect_msg = "Did you use samplingWeight?")
+test_object(maleUpperCI<-1.96*stdErrGender+totalMales, 
+            undefined_msg = "Did you assign a value to schoolkids$samplingWeight?",
+            incorrect_msg = "Did you use samplingWeight?")
+test_object(maleLowerCI<-1.96*stdErrGender-totalMales, 
+            undefined_msg = "Did you assign a value to schoolkids$samplingWeight?",
+            incorrect_msg = "Did you use samplingWeight?")
+test_object(femaleUpperCI<-1.96*stdErrGender+totalFemales, 
+            undefined_msg = "Did you assign a value to schoolkids$samplingWeight?",
+            incorrect_msg = "Did you use samplingWeight?")
+test_object(femaleLowerCI<-1.96*stdErrGender-totalFemales, 
+            undefined_msg = "Did you assign a value to schoolkids$samplingWeight?",
+            incorrect_msg = "Did you use samplingWeight?")
+test_object(maleUpperCI, 
+            undefined_msg = "Did you assign a value to schoolkids$samplingWeight?",
+            incorrect_msg = "Did you use samplingWeight?")
+test_object(maleLowerCI, 
+            undefined_msg = "Did you assign a value to schoolkids$samplingWeight?",
+            incorrect_msg = "Did you use samplingWeight?")
+test_object(femaleUpperCI, 
+            undefined_msg = "Did you assign a value to schoolkids$samplingWeight?",
+            incorrect_msg = "Did you use samplingWeight?")
+test_object(femaleLowerCI, 
             undefined_msg = "Did you assign a value to schoolkids$samplingWeight?",
             incorrect_msg = "Did you use samplingWeight?")
 
 success_msg("Great! ")
 ```
 
+---type:MultipleChoiceExercise xp:100
 
+## Statistical Significance
+
+After looking at the confidence intervals for the number of boys and girls, determine whether the distribution of males and females in our sample is statistically significantly different than an exactly half male, half female population. 
+
+*** =instructions
+- The difference is boys and girls in our population is statistically significantly different than a half male, half female population
+- The difference is boys and girls in our population is NOT statistically significantly different than a half male, half female population
+- No way to tell
+
+
+*** =hint
+Is 500 in the confidence interval for boys and girls?
+
+*** =pre_exercise_code
+```{r eval=FALSE}
+schoolkids<-read.csv("childdata.csv")
+schoolkids$samplingWeight<-5
+samplingWeight<-5
+totalMales<-samplingWeight*sum(schoolkids$gender=="Male")
+totalFemales<-samplingWeight*sum(schoolkids$gender=="Female")
+# Find the standard error for gender
+stdErrGender<-sqrt(((1000-200)/1000)*1000^2*(var(schoolkids$gender)/200))
+
+# Print the upper and lower confidence intervals for the total number of males and females
+maleUpperCI<-1.96*stdErrGender+totalMales
+maleLowerCI<-1.96*stdErrGender-totalMales
+
+femaleUpperCI<-1.96*stdErrGender+totalFemales
+femaleLowerCI<-1.96*stdErrGender-totalFemales
+```
+*** =sample_code
+```{r eval=FALSE}
+# The variables from the previous exercise are already loaded
+# Take a look at maleUpperCI, maleLowerCI, femaleUpperCI, and femaleLowerCI
+
+
+```
+*** =sct
+```{r,eval=FALSE}
+msg1 = "Nope. Try again"
+msg2 = "Well done!"
+
+test_mc(correct = 1, feedback_msgs = c(msg2,msg1,msg1))
+```
 
 
