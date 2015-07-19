@@ -39,15 +39,15 @@ success_msg("Well done! Continue!")
 
 Suppose a school takes a random sample of test scores of their students, and wants to estimate the average score across the school's entire population.
 
-Lets say their are $1000$ students at the school and we sample $200$ of them. Each student has an equal probability of being selected into the sample.
+Lets say their are $$1000$$ students at the school and we sample $200$ of them. Each student has an equal probability of being selected into the sample.
 
-What is the probability, $\pi_i$, that any one student is sampled?
+What is the probability, $$\pi_i$$, that any one student is sampled?
 
 *** =instructions
-- $\frac{1}{4}$
-- $\frac{1}{5}$
-- $\frac{1}{2}$
-- $\frac{1}{3}$
+- $$\frac{1}{4}$$
+- $$\frac{1}{5}$$
+- $$\frac{1}{2}$$
+- $$\frac{1}{3}$$
 
 
 *** =hint
@@ -69,9 +69,9 @@ One of the main concepts of survey statistics is sampling weights. The formula f
 
 $$ sampling weight=\frac{1}{\pi_i} $$ 
 
-Where $\pi_i$ is the probability of person *i* being sampled.
+Where $$\pi_i$$ is the probability of person *i* being sampled.
 
-Consider the example from the previous problem. Each student has a $\pi_i=\frac{1}{5}$ so the sampling weight equals $5$.
+Consider the example from the previous problem. Each student has a $$\pi_i=\frac{1}{5}$$ so the sampling weight equals $$5$$.
 
 *** =instructions
 -Already loaded is a dataset with the test scores of 200 students.
@@ -131,7 +131,7 @@ success_msg("Great! Head over to the next exercise.")
 
 The Horvits-Thompson estimator approximates the population total by summing the weighted observations. Continueing with the previous example, the formula for the Horvits-Thompson estimator of total student test scores is
 
-$E[T_{score}]=\sum\limits_{i=1}^N \frac{1}{\pi_i} * score_i * \pi_i=\sum\limits_{i=1}^N score_i= T_{score}$
+$$E[T_{score}]=\sum\limits_{i=1}^N \frac{1}{\pi_i} * score_i * \pi_i=\sum\limits_{i=1}^N score_i= T_{score}$$
 
 *** =instructions
 -Add a variable to the dataset named `{r}samplingweight` that is equal to the `{r}samplingweight` variable you created in the last exercise.
