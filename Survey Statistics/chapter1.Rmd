@@ -1,7 +1,7 @@
 ---
 title_meta  : Chapter 1
 title       : Introduction to the Simple Random Sample
-description : We introduce the concepts of survey statistics by looking at a simple random sample.
+description : I introduce the concepts of survey statistics by looking at a simple random sample.
 
 ---type:NormalExercise xp:100
 
@@ -39,9 +39,9 @@ success_msg("Well done! Continue!")
 
 Suppose a school takes a random sample of test scores of their students, and wants to estimate the average score across the school's entire population.
 
-Lets say their are $$1000$$ students at the school and we sample $200$ of them. Each student has an equal probability of being selected into the sample.
+Lets say their are $1000$ students at the school and you sample $200$ of them. Each student has an equal probability of being selected into the sample.
 
-What is the probability, $$\pi_i$$, that any one student is sampled?
+What is the probability, $\pi_i$, that any one student is sampled?
 
 *** =instructions
 - $$\frac{1}{4}$$
@@ -69,9 +69,9 @@ One of the main concepts of survey statistics is sampling weights. The formula f
 
 $$ sampling weight=\frac{1}{\pi_i} $$ 
 
-Where $$\pi_i$$ is the probability of person *i* being sampled.
+Where $\pi_i$ is the probability of person *i* being sampled.
 
-Consider the example from the previous problem. Each student has a $$\pi_i=\frac{1}{5}$$ so the sampling weight equals $$5$$.
+Consider the example from the previous problem. Each student has a $\pi_i=\frac{1}{5}$ so the sampling weight equals $5$.
 
 *** =instructions
 - Already loaded is a dataset with the test scores of 200 students.
@@ -83,7 +83,7 @@ If you don't remember the head and str functions use ?
 
 *** =pre_exercise_code
 ```{r eval=FALSE}
-schoolkids<-read.csv("childdata.csv")
+schoolkids <- read.csv("childdata.csv")
 ```
 
 *** =sample_code
@@ -96,7 +96,7 @@ schoolkids<-read.csv("childdata.csv")
 
 
 # Set samplingWeight equal to the sampling weight
-samplingWeight<-_____
+samplingWeight <- _____
 
 ```
 
@@ -110,7 +110,7 @@ head(schoolkids)
 str(schoolkids)
 
 # Set samplingWeight equal to the sampling weight
-samplingWeight<-5
+samplingWeight <- 5
 
 ```
 
@@ -121,8 +121,8 @@ test_object(head(schoolkids),
             incorrect_msg = "Please make sure to print the first 5 rows")
 test_object(str(schoolkids), undefined_msg="Please look at the structure of the dataset.",
             incorrect_msg="Please look at the structure of the dataset.")
-test_object(samplingWeight<-5, undefined_msg="Please assign a value to samplingWeight.",
-            incorrect_msg="Did you assign the correct value to samplingWeight?")
+test_object(samplingWeight<-5, undefined_msg="Please assign a value to <code>samplingWeight<\code>.",
+            incorrect_msg="Did you assign the correct value to <code>samplingWeight<\code>?")
 success_msg("Great! Head over to the next exercise.")
 ```
 ---type:NormalExercise xp:100
@@ -143,8 +143,8 @@ The Horvits-Thompson Estimator formula in *R* code looks like `{r} samplingWeigh
 
 *** =pre_exercise_code
 ```{r eval=FALSE}
-schoolkids<-read.csv("childdata.csv")
-samplingWeight<-5
+schoolkids <- read.csv("childdata.csv")
+samplingWeight <- 5
 ```
 
 *** =sample_code
@@ -153,11 +153,11 @@ samplingWeight<-5
 # The variable samplingWeight is already loaded
 
 # Create a new variable in schoolkids equal to samplingWeight
-schoolkids$samplingWeight<-_____
+schoolkids$samplingWeight <- _____
 
 # Assign the sum of the students' scores multiplied by their weights
-totalMales<-_____
-totalFemales<-_____
+totalMales <- _____
+totalFemales <- _____
 #Print out the results
 
 
@@ -169,11 +169,11 @@ totalFemales<-_____
 # The variable samplingWeight is already loaded
 
 # Create a new variable in schoolkids equal to samplingWeight
-schoolkids$samplingWeight<-samplingWeight
+schoolkids$samplingWeight <- samplingWeight
 
 # Assign the sum of the students' scores multiplied by their weights
-totalMales<-samplingWeight*sum(schoolkids$gender=="Male")
-totalFemales<-samplingWeight*sum(schoolkids$gender=="Female")
+totalMales <- samplingWeight*sum(schoolkids$gender=="Male")
+totalFemales <- samplingWeight*sum(schoolkids$gender=="Female")
 # Print out the results
 totalMales
 totalFemales
@@ -183,29 +183,29 @@ totalFemales
 *** =sct
 ```{r eval=FALSE}
 test_object(schoolkids$samplingWeight<-samplingWeight, 
-            undefined_msg = "Did you assign a value to schoolkids$samplingWeight?",
-            incorrect_msg = "Did you use samplingWeight?")
+            undefined_msg = "Did you assign a value to <code>schoolkids$samplingWeight<\code>?",
+            incorrect_msg = "Did you use <code>samplingWeight<\code>?")
 test_object(totalMales<-samplingWeight*sum(schoolkids$gender=="Male"), 
-            undefined_msg = "Did you assign a value to totalMales?",
-            incorrect_msg = "Did you use samplingWeight times the number of males in the sample?")
+            undefined_msg = "Did you assign a value to <code>totalMales<\code>?",
+            incorrect_msg = "Did you use <code>samplingWeight<\code> times the number of males in the sample?")
 test_object(totalFemales<-samplingWeight*sum(schoolkids$gender=="Female"), 
-            undefined_msg = "Did you assign a value to totalFemales?",
-            incorrect_msg = "Did you use samplingWeight times the number of females in the sample?")
+            undefined_msg = "Did you assign a value to <code>totalFemales<\code>?",
+            incorrect_msg = "Did you use <code>samplingWeight<\code> times the number of females in the sample?")
 test_object(totalMales), 
-            undefined_msg = "Did you print totalMales?",
-            incorrect_msg = "Did you use samplingWeight times the number of males in the sample?")
+            undefined_msg = "Did you print <code>totalMales<\code>?",
+            incorrect_msg = "Did you use <code>samplingWeight<\code> times the number of males in the sample?")
 test_object(totalFemales), 
-            undefined_msg = "Did you print totalFemales?",
-            incorrect_msg = "Did you use samplingWeight times the number of females in the sample?")
+            undefined_msg = "Did you print <code>totalFemales<\code>?",
+            incorrect_msg = "Did you use <code>samplingWeight<\code> times the number of females in the sample?")
 success_msg("Great! But remember that our result is just an estimate.")
 ```
 ---type:NormalExercise xp:100
 
 ## Variance of Horvits-Thompson Estimator
 
-Keep in mind that the results from the previous exercise are purely estimates. Let's look at the variance so that we can get a sense of how good an estimate we have.
+Keep in mind that the results from the previous exercise are purely estimates. Let's look at the variance so that you can get a sense of how good an estimate you have.
 
-The formula for the variance of the Horvits-Thompson Estimator of the a population total for a variable x:
+The formula for the variance of the Horvits-Thompson Estimator of the a population total for a variable $x$:
 
 $$ var[T_x]=\sum\limits_{i,j} (\frac{x_i*x_j}{\pi_{ij}}-\frac{x_i*x_j}{\pi_i*\pi_j}) $$
 
@@ -215,7 +215,7 @@ $$ var[T_x]=\frac{(N-n)}{N}*N^2*\frac{var(x)}{n} $$
 
 Showing that the second formula is equivalent to the first for a simple random sample is an extra credit exercise left to you.
 
-The standard error is the square root of the variance. We can build 95% confidence intervals by addind and substracting $$1.96*standard error$$ from the total estimate.
+The standard error is the square root of the variance. You can build 95% confidence intervals by addind and substracting $1.96*standard error$ from the total estimate.
 
 *** =instructions
 - Using the formula for the variance of the Horvits-Thompson estimator for a simple random sample, find the standard error for gender.
@@ -226,10 +226,10 @@ Remember the sample has 200 out of 1000 people. Also remember the var(x) from th
 
 *** =pre_exercise_code
 ```{r eval=FALSE}
-schoolkids<-read.csv("childdata.csv")
-schoolkids$samplingWeight<-5
-totalMales<-samplingWeight*sum(schoolkids$gender=="Male")
-totalFemales<-samplingWeight*sum(schoolkids$gender=="Female")
+schoolkids <- read.csv("childdata.csv")
+schoolkids$samplingWeight <- 5
+totalMales <- samplingWeight*sum(schoolkids$gender=="Male")
+totalFemales <- samplingWeight*sum(schoolkids$gender=="Female")
 ```
 
 *** =sample_code
@@ -238,14 +238,14 @@ totalFemales<-samplingWeight*sum(schoolkids$gender=="Female")
 # The variables totalMales and totalFemales are already loaded
 
 # Find the standard error for gender
-stdErrGender<-sqrt(_____)
+stdErrGender <- sqrt(_____)
 
 # Print the upper and lower confidence intervals for the total number of males and females
-maleUpperCI<-1.96*_____+_____
-maleLowerCI<-1.96*_____-_____
+maleUpperCI <- 1.96*_____+_____
+maleLowerCI <- 1.96*_____-_____
 
-femaleUpperCI<-1.96*_____+_____
-femaleLowerCI<-1.96*_____-_____
+femaleUpperCI <- 1.96*_____+_____
+femaleLowerCI <- 1.96*_____-_____
 
 # Print out the intervals
 
@@ -257,14 +257,14 @@ femaleLowerCI<-1.96*_____-_____
 # The variables totalMales and totalFemales are already loaded
 
 # Find the standard error for gender
-stdErrGender<-sqrt(((1000-200)/1000)*1000^2*(var(schoolkids$gender)/200))
+stdErrGender <- sqrt(((1000-200)/1000)*1000^2*(var(schoolkids$gender)/200))
 
 # Print the upper and lower confidence intervals for the total number of males and females
-maleUpperCI<-1.96*stdErrGender+totalMales
-maleLowerCI<-1.96*stdErrGender-totalMales
+maleUpperCI <- 1.96*stdErrGender+totalMales
+maleLowerCI <- 1.96*stdErrGender-totalMales
 
-femaleUpperCI<-1.96*stdErrGender+totalFemales
-femaleLowerCI<-1.96*stdErrGender-totalFemales
+femaleUpperCI <- 1.96*stdErrGender+totalFemales
+femaleLowerCI <- 1.96*stdErrGender-totalFemales
 
 # Print out the intervals
 maleUpperCI
@@ -277,32 +277,32 @@ femaleLowerCI
 *** =sct
 ```{r eval=FALSE}
 test_object(stdErrGender<-sqrt(((1000-200)/1000)*1000^2*(var(schoolkids$gender)/200)), 
-            undefined_msg = "Did you assign a value to schoolkids$samplingWeight?",
-            incorrect_msg = "Did you use samplingWeight?")
+            undefined_msg = "",
+            incorrect_msg = "")
 test_object(maleUpperCI<-1.96*stdErrGender+totalMales, 
-            undefined_msg = "Did you assign a value to schoolkids$samplingWeight?",
-            incorrect_msg = "Did you use samplingWeight?")
+            undefined_msg = "",
+            incorrect_msg = "")
 test_object(maleLowerCI<-1.96*stdErrGender-totalMales, 
-            undefined_msg = "Did you assign a value to schoolkids$samplingWeight?",
-            incorrect_msg = "Did you use samplingWeight?")
+            undefined_msg = "",
+            incorrect_msg = "")
 test_object(femaleUpperCI<-1.96*stdErrGender+totalFemales, 
-            undefined_msg = "Did you assign a value to schoolkids$samplingWeight?",
-            incorrect_msg = "Did you use samplingWeight?")
+            undefined_msg = "",
+            incorrect_msg = "")
 test_object(femaleLowerCI<-1.96*stdErrGender-totalFemales, 
-            undefined_msg = "Did you assign a value to schoolkids$samplingWeight?",
-            incorrect_msg = "Did you use samplingWeight?")
+            undefined_msg = "",
+            incorrect_msg = "")
 test_object(maleUpperCI, 
-            undefined_msg = "Did you assign a value to schoolkids$samplingWeight?",
-            incorrect_msg = "Did you use samplingWeight?")
+            undefined_msg = "",
+            incorrect_msg = "")
 test_object(maleLowerCI, 
-            undefined_msg = "Did you assign a value to schoolkids$samplingWeight?",
-            incorrect_msg = "Did you use samplingWeight?")
+            undefined_msg = "",
+            incorrect_msg = "")
 test_object(femaleUpperCI, 
-            undefined_msg = "Did you assign a value to schoolkids$samplingWeight?",
-            incorrect_msg = "Did you use samplingWeight?")
+            undefined_msg = "",
+            incorrect_msg = "")
 test_object(femaleLowerCI, 
-            undefined_msg = "Did you assign a value to schoolkids$samplingWeight?",
-            incorrect_msg = "Did you use samplingWeight?")
+            undefined_msg = "",
+            incorrect_msg = "")
 
 success_msg("Great! ")
 ```
@@ -324,20 +324,20 @@ Is 500 in the confidence interval for boys and girls?
 
 *** =pre_exercise_code
 ```{r eval=FALSE}
-schoolkids<-read.csv("childdata.csv")
-schoolkids$samplingWeight<-5
-samplingWeight<-5
-totalMales<-samplingWeight*sum(schoolkids$gender=="Male")
-totalFemales<-samplingWeight*sum(schoolkids$gender=="Female")
+schoolkids <- read.csv("childdata.csv")
+schoolkids$samplingWeight <- 5
+samplingWeight <- 5
+totalMales <- samplingWeight*sum(schoolkids$gender=="Male")
+totalFemales <- samplingWeight*sum(schoolkids$gender=="Female")
 # Find the standard error for gender
-stdErrGender<-sqrt(((1000-200)/1000)*1000^2*(var(schoolkids$gender)/200))
+stdErrGender <- sqrt(((1000-200)/1000)*1000^2*(var(schoolkids$gender)/200))
 
 # Print the upper and lower confidence intervals for the total number of males and females
-maleUpperCI<-1.96*stdErrGender+totalMales
-maleLowerCI<-1.96*stdErrGender-totalMales
+maleUpperCI <- 1.96*stdErrGender+totalMales
+maleLowerCI <- 1.96*stdErrGender-totalMales
 
-femaleUpperCI<-1.96*stdErrGender+totalFemales
-femaleLowerCI<-1.96*stdErrGender-totalFemales
+femaleUpperCI <- 1.96*stdErrGender+totalFemales
+femaleLowerCI <- 1.96*stdErrGender-totalFemales
 ```
 *** =sample_code
 ```{r eval=FALSE}
@@ -354,4 +354,91 @@ msg2 = "Well done!"
 test_mc(correct = 1, feedback_msgs = c(msg2,msg1,msg1))
 ```
 
+---type:NormalExercise xp:100
 
+## Horvits-Thompson estimate for the population mean
+
+Now imagine the school wants to estimate the mean test score for its students. The Horvits-Thompson estimate for the population mean of a variable $x$:
+
+$$ \mu_x=\frac{1}{N} \sum\limits_{i=1}^n \frac{1}{\pi_i}*x_i=\frac{1}{n} \sum\limits_{i=1}^n x_i $$
+
+Notice that the estiamte for the population average is equal to the sample average. The more interesting formula is the variance of the population for a var x:
+
+$$ var[\mu_x]=\frac{N-n}{N}*\frac{var[x]}{n} $$
+
+The formula is almost the same as the variance for the Horvits-Thompson total, but the $N^2$ term is dropped.
+
+*** =instructions
+- Build 95% confidence intervals for the mean test score of the total student population.
+
+*** =hint
+
+
+*** =pre_exercise_code
+```{r eval=FALSE}
+schoolkids <- read.csv("childdata.csv")
+schoolkids$samplingWeight <- 5
+samplingWeight <- 5
+```
+
+*** =sample_code
+```{r eval=FALSE}
+# The dataframe schoolkids is already loaded
+# Find the mean test score
+testAverage <- _____
+
+# Find the variance for the mean test score
+testVar <- _____
+  
+# Find the confidence intervals
+testHi <- _____
+testLow <- _____
+
+# Print out the intervals
+
+
+
+```
+
+*** =solution
+```{r eval=FALSE}
+# The dataframe schoolkids is already loaded
+# Find the mean test score
+testAverage <- mean(schoolkids$score)
+
+# Find the variance for the mean test score
+testVar <- ((1000-200)/1000)*var(schoolkids$score)/n
+  
+# Find the confidence intervals
+testHi <- 1.96*testVar+testAverage
+testLow <- 1.96*testVar-testAverage
+
+# Print out the intervals
+testHi
+testLow
+
+```
+
+*** =sct
+```{r eval=FALSE}
+test_object(testAverage <- mean(schoolkids$score), 
+            undefined_msg = "",
+            incorrect_msg = "")
+test_object(testVar <- ((1000-200)/1000)*var(schoolkids$score)/n, 
+            undefined_msg = "",
+            incorrect_msg = "")
+test_object(testHi <- 1.96*testVar+testAverage, 
+            undefined_msg = "",
+            incorrect_msg = "")
+test_object(testLow <- 1.96*testVar-testAverage, 
+            undefined_msg = "",
+            incorrect_msg = "")
+test_object(testHi, 
+            undefined_msg = "",
+            incorrect_msg = "")
+test_object(testLow, 
+            undefined_msg = "",
+            incorrect_msg = "")
+
+success_msg("Great! ")
+```
