@@ -3,6 +3,15 @@ title_meta  : Chapter 1
 title       : Introduction to the Simple Random Sample
 description : I introduce the concepts of survey statistics by looking at a simple random sample.
 
+--- type:VideoExercise aspect_ratio:62.5 xp:50
+## Introduction to Survey Statistics
+
+*** =video_link
+
+```{r,eval=FALSE}
+
+```
+  
 ---type:NormalExercise xp:100
 
 ## Welcome to Survey Statistics
@@ -125,6 +134,15 @@ test_object(samplingWeight<-5, undefined_msg="Please assign a value to <code>sam
             incorrect_msg="Did you assign the correct value to <code>samplingWeight<\code>?")
 success_msg("Great! Head over to the next exercise.")
 ```
+--- type:VideoExercise aspect_ratio:62.5 xp:50
+## Estimates and Variances
+
+*** =video_link
+
+```{r,eval=FALSE}
+
+```
+  
 ---type:NormalExercise xp:100
 
 ## Horvits-Thompson Estimator
@@ -407,7 +425,7 @@ testLow <- _____
 testAverage <- mean(schoolkids$score)
 
 # Find the variance for the mean test score
-testVar <- ((1000-200)/1000)*var(schoolkids$score)/n
+testVar <- ((1000-200)/1000)*var(schoolkids$score)/200
   
 # Find the confidence intervals
 testHi <- 1.96*testVar+testAverage
@@ -441,4 +459,51 @@ test_object(testLow,
             incorrect_msg = "")
 
 success_msg("Great! ")
+```
+--- type:VideoExercise aspect_ratio:62.5 xp:50
+## Introduction to R Package
+
+*** =video_link
+
+```{r,eval=FALSE}
+
+```
+  
+---type:NormalExercise xp:100
+
+## Create a Survey Object
+
+The R `{r} survey` package was designed by Thomas Lumley to make tasks like the one you did earlier much easier.
+
+The first thing you will do is load the package, and create a survey object. Like so:
+
+```{r,eval=FALSE}
+
+surveyobject <- svydesign(id=~1, fpc=1000, data=schoolkids)
+
+#or
+
+surveyobject <- svydesign(id=~1, weights=~samplingWeight,data=schoolkids)
+```
+
+
+
+*** =instructions
+- Run the code that installs and loads the survey package.
+
+
+*** =sample_code
+```{r,eval=FALSE}
+install.packages("survey")
+library("survey")
+```
+
+*** =sct
+```{r,eval=FALSE}
+# The Submission Correctness Test code
+# It takes as input the students workspace, his code and what was printed to the console during the exercise.
+# Based on these inputs the SCT returns:
+# (i) whether the students code was correct
+# (ii) a message to the student to either help him find what was wrong or congratulate him on finding the solution.
+success_msg("Well done! Continue!")
 ```
