@@ -18,11 +18,12 @@ description : I introduce the concepts of survey statistics by looking at a simp
 
 In this course you will learn methods frequently used to manage and analyze survey data. Survey data is used in a variety of fields including Public Health, Economics, Political Science, and Data Science. The US Census, the National Health Interview Survey, The National Health and Nutrition Examination Survey, The California Health Interview Survey, Nielsen Ratings, and Election Polling are some examples of survey datasets. 
 
-R is well suited to handle survey statistics using the "survey" package developed by Thomas Lumley. Lumley's book *Complex Surveys: A Guide to Analysis Using R* is the main resource for this course, and it is highly recommended.
+R is well suited to handle survey statistics using the "survey" package developed by Professor Thomas Lumley. Lumley's book *Complex Surveys: A Guide to Analysis Using R* is the main resource for this course, and it is highly recommended.
 
 
 
 *** =instructions
+
 - Run the code that installs and loads the survey package.
 
 
@@ -53,14 +54,14 @@ Lets say their are $1000$ students at the school and you sample $200$ of them. E
 What is the probability, $\pi_i$, that any one student is sampled?
 
 *** =instructions
-- $$\frac{1}{4}$$
-- $$\frac{1}{5}$$
-- $$\frac{1}{2}$$
-- $$\frac{1}{3}$$
 
+- $\frac{1}{4}$
+- $\frac{1}{5}$
+- $\frac{1}{2}$
+- $\frac{1}{3}$
 
 *** =hint
-What is 200 divided by 1000?
+What is $200$ divided by $1000$?
 
 
 *** =sct
@@ -76,19 +77,20 @@ test_mc(correct = 2, feedback_msgs = c(msg1,msg2,msg1,msg1))
 
 One of the main concepts of survey statistics is sampling weights. The formula for sampling weights is 
 
-$$ sampling weight=\frac{1}{\pi_i} $$ 
+$$ \text{sampling weight}=\frac{1}{\pi_i} $$ 
 
 Where $\pi_i$ is the probability of person *i* being sampled.
 
 Consider the example from the previous problem. Each student has a $\pi_i=\frac{1}{5}$ so the sampling weight equals $5$.
 
 *** =instructions
-- Already loaded is a dataset with the test scores of 200 students.
-- Look at the first 5 rows and the structure of the dataset.
-- Set the variable `{r} samplingWeight` equal to the correct value. 
+
+- Already loaded is a dataset with the test scores of $200$ students.
+- Look at the first $5$ rows and the structure of the dataset.
+- Set the variable `samplingWeight` equal to the correct value. 
 
 *** =hint
-If you don't remember the head and str functions use ?
+If you don't remember the `head` and `str` functions use `?`
 
 *** =pre_exercise_code
 ```{r eval=FALSE}
@@ -151,13 +153,20 @@ The Horvits-Thompson estimator approximates the population total by summing the 
 
 $$E[T_{score}]=\sum\limits_{i=1}^N \frac{1}{\pi_i} * score_i * \pi_i=\sum\limits_{i=1}^N score_i= T_{score}$$
 
+To estimate the total number of $13$ year olds you would need to sum the weights for all the sampled $13$ year olds like:
+
+`sum(schoolkids$samplingWeight[schoolkids$age==13])`
+
+This is the same as the above formula because the subsetting operation is equivalent to multiplying the weights by a binary variable where $\text{yes student is } 13=1$, and $\text{no student is not } 13=0$. 
+
 *** =instructions
-- Add a variable to the dataset named `{r}samplingweight` that is equal to the `{r}samplingweight` variable you created in the last exercise.
+
+- Add a variable to the dataset named `samplingweight` that is equal to the `samplingweight` variable you created in the last exercise.
 
 -Using the Horvits-Thompson Estimator, predict the total number of boys and girls at the school.
 
 *** =hint
-The Horvits-Thompson Estimator formula in *R* code looks like `{r} samplingWeight*sum(x)`
+The Horvits-Thompson Estimator formula in *R* code looks like `samplingWeight*sum(x)`
 
 *** =pre_exercise_code
 ```{r eval=FALSE}
@@ -190,8 +199,8 @@ totalFemales <- _____
 schoolkids$samplingWeight <- samplingWeight
 
 # Assign the sum of the students' scores multiplied by their weights
-totalMales <- samplingWeight*sum(schoolkids$gender=="Male")
-totalFemales <- samplingWeight*sum(schoolkids$gender=="Female")
+totalMales <- sum(schoolkids$samplingWeight[schoolkids$gender=="Male"])
+totalFemales <- sum(schoolkids$samplingWeight[schoolkids$gender=="Female"])
 # Print out the results
 totalMales
 totalFemales
@@ -203,12 +212,12 @@ totalFemales
 test_object(schoolkids$samplingWeight<-samplingWeight, 
             undefined_msg = "Did you assign a value to <code>schoolkids$samplingWeight<\code>?",
             incorrect_msg = "Did you use <code>samplingWeight<\code>?")
-test_object(totalMales<-samplingWeight*sum(schoolkids$gender=="Male"), 
+test_object(totalMales <- sum(schoolkids$samplingWeight[schoolkids$gender=="Male"]), 
             undefined_msg = "Did you assign a value to <code>totalMales<\code>?",
-            incorrect_msg = "Did you use <code>samplingWeight<\code> times the number of males in the sample?")
-test_object(totalFemales<-samplingWeight*sum(schoolkids$gender=="Female"), 
+            incorrect_msg = "Did you sum the <code>samplingWeight<\code> for the males in the sample?")
+test_object(totalFemales <- sum(schoolkids$samplingWeight[schoolkids$gender=="Female"]), 
             undefined_msg = "Did you assign a value to <code>totalFemales<\code>?",
-            incorrect_msg = "Did you use <code>samplingWeight<\code> times the number of females in the sample?")
+            incorrect_msg = "Did you sum the <code>samplingWeight<\code> for the females in the sample?")
 test_object(totalMales), 
             undefined_msg = "Did you print <code>totalMales<\code>?",
             incorrect_msg = "Did you use <code>samplingWeight<\code> times the number of males in the sample?")
@@ -233,14 +242,15 @@ $$ var[T_x]=\frac{(N-n)}{N}*N^2*\frac{var(x)}{n} $$
 
 Showing that the second formula is equivalent to the first for a simple random sample is an extra credit exercise left to you.
 
-The standard error is the square root of the variance. You can build 95% confidence intervals by addind and substracting $1.96*standard error$ from the total estimate.
+The standard error is the square root of the variance. You can build 95% confidence intervals by addind and substracting $1.96*\text{standard error}$ from the total estimate.
 
 *** =instructions
+
 - Using the formula for the variance of the Horvits-Thompson estimator for a simple random sample, find the standard error for gender.
 - Then use the standard error to find confidence intervals for the total number of boys and girls.
 
 *** =hint
-Remember the sample has 200 out of 1000 people. Also remember the var(x) from the formula is equivalent to `{r} var(schoolkids$gender)`
+Remember the sample has 200 out of 1000 people. Also remember the var(x) from the formula is equivalent to `var(schoolkids$gender)`
 
 *** =pre_exercise_code
 ```{r eval=FALSE}
@@ -295,34 +305,35 @@ femaleLowerCI
 *** =sct
 ```{r eval=FALSE}
 test_object(stdErrGender<-sqrt(((1000-200)/1000)*1000^2*(var(schoolkids$gender)/200)), 
-            undefined_msg = "",
-            incorrect_msg = "")
-test_object(maleUpperCI<-1.96*stdErrGender+totalMales, 
-            undefined_msg = "",
-            incorrect_msg = "")
-test_object(maleLowerCI<-1.96*stdErrGender-totalMales, 
-            undefined_msg = "",
-            incorrect_msg = "")
-test_object(femaleUpperCI<-1.96*stdErrGender+totalFemales, 
-            undefined_msg = "",
-            incorrect_msg = "")
-test_object(femaleLowerCI<-1.96*stdErrGender-totalFemales, 
-            undefined_msg = "",
-            incorrect_msg = "")
-test_object(maleUpperCI, 
-            undefined_msg = "",
-            incorrect_msg = "")
-test_object(maleLowerCI, 
-            undefined_msg = "",
-            incorrect_msg = "")
-test_object(femaleUpperCI, 
-            undefined_msg = "",
-            incorrect_msg = "")
-test_object(femaleLowerCI, 
-            undefined_msg = "",
-            incorrect_msg = "")
+            undefined_msg = "Make sure to solve for the standard error for the gender variable",
+            incorrect_msg = "Look at the formula give above for a simple random sample. Use the hint if you need help.")
 
-success_msg("Great! ")
+test_object(maleUpperCI<-1.96*stdErrGender+totalMales, 
+            undefined_msg = "Make sure to solve for the male upper confidence interval.",
+            incorrect_msg = "Remember that the upper CI is 1.96 times the standard error plus the estimated value.")
+test_object(maleLowerCI<-1.96*stdErrGender-totalMales, 
+            undefined_msg = "Make sure to solve for the male lower confidence interval.",
+            incorrect_msg = "Remember that the lower CI is 1.96 times the standard error minus the estimated value.")
+test_object(femaleUpperCI<-1.96*stdErrGender+totalFemales, 
+            undefined_msg = "Make sure to solve for the female upper confidence interval.",
+            incorrect_msg = "Remember that the upper CI is 1.96 times the standard error plus the estimated value.")
+test_object(femaleLowerCI<-1.96*stdErrGender-totalFemales, 
+            undefined_msg = "Make sure to solve for the female lower confidence interval.",
+            incorrect_msg = "Remember that the lower CI is 1.96 times the standard error minus the estimated value.")
+test_object(maleUpperCI, 
+            undefined_msg = "Remember to print the male upper CI",
+            incorrect_msg = "Did you print the correct intervals?")
+test_object(maleLowerCI, 
+            undefined_msg = "Remember to print the male lower CI",
+            incorrect_msg = "Did you print the correct intervals?")
+test_object(femaleUpperCI, 
+            undefined_msg = "Remember to print the female upper CI",
+            incorrect_msg = "Did you print the correct intervals?")
+test_object(femaleLowerCI, 
+            undefined_msg = "Remember to print the female lower CI",
+            incorrect_msg = "Did you print the correct intervals?")
+
+success_msg("Great Job!")
 ```
 
 ---type:MultipleChoiceExercise xp:100
@@ -332,6 +343,7 @@ success_msg("Great! ")
 After looking at the confidence intervals for the number of boys and girls, determine whether the distribution of males and females in our sample is statistically significantly different than an exactly half male, half female population. 
 
 *** =instructions
+
 - The difference is boys and girls in our population is statistically significantly different than a half male, half female population
 - The difference is boys and girls in our population is NOT statistically significantly different than a half male, half female population
 - No way to tell
@@ -387,10 +399,11 @@ $$ var[\mu_x]=\frac{N-n}{N}*\frac{var[x]}{n} $$
 The formula is almost the same as the variance for the Horvits-Thompson total, but the $N^2$ term is dropped.
 
 *** =instructions
+
 - Build 95% confidence intervals for the mean test score of the total student population.
 
 *** =hint
-
+Use the formula above to find `testVar`; remember that the survey is of 200 students out of 1000. Then estimate the confidence intervals by multiplying `testVar` by $1.96$ and addind and subtracting the result from the estimate. 
 
 *** =pre_exercise_code
 ```{r eval=FALSE}
@@ -440,23 +453,23 @@ testLow
 *** =sct
 ```{r eval=FALSE}
 test_object(testAverage <- mean(schoolkids$score), 
-            undefined_msg = "",
-            incorrect_msg = "")
+            undefined_msg = "Did you find the test mean?",
+            incorrect_msg = "Remember that the mean for the survey is same as the regular mean")
 test_object(testVar <- ((1000-200)/1000)*var(schoolkids$score)/n, 
-            undefined_msg = "",
-            incorrect_msg = "")
+            undefined_msg = "Did you find the test variance?",
+            incorrect_msg = "If you are having trouble finding the variance, use the hint.")
 test_object(testHi <- 1.96*testVar+testAverage, 
-            undefined_msg = "",
-            incorrect_msg = "")
+            undefined_msg = "Did you find the upper CI?",
+            incorrect_msg = "Use the hint if you are having trouble finding the CI.")
 test_object(testLow <- 1.96*testVar-testAverage, 
-            undefined_msg = "",
-            incorrect_msg = "")
+            undefined_msg = "Did you find the lower CI?",
+            incorrect_msg = "Use the hint if you are having trouble finding the CI.")
 test_object(testHi, 
-            undefined_msg = "",
-            incorrect_msg = "")
+            undefined_msg = "Did you remember to print the upper CI?",
+            incorrect_msg = "Did you print the correct CI?")
 test_object(testLow, 
-            undefined_msg = "",
-            incorrect_msg = "")
+            undefined_msg = "Did you remember to print the lower CI?",
+            incorrect_msg = "Did you print the correct CI?")
 
 success_msg("Great! ")
 ```
@@ -473,7 +486,7 @@ success_msg("Great! ")
 
 ## Create a Survey Object
 
-The R `{r} survey` package was designed by Thomas Lumley to make tasks like the one you did earlier much easier.
+The R `survey` package was designed by Thomas Lumley to make tasks like the one you did earlier much easier.
 
 The first thing you will do is load the package, and create a survey object. Like so:
 

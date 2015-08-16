@@ -69,12 +69,17 @@ img {
 
 <hr />
 <p>title_meta : Chapter 1 title : Introduction to the Simple Random Sample description : I introduce the concepts of survey statistics by looking at a simple random sample.</p>
+<p>— type:VideoExercise aspect_ratio:62.5 xp:50 ## Introduction to Survey Statistics</p>
+<p>*** =video_link</p>
 <p>—type:NormalExercise xp:100</p>
 <div id="welcome-to-survey-statistics" class="section level2">
 <h2>Welcome to Survey Statistics</h2>
 <p>In this course you will learn methods frequently used to manage and analyze survey data. Survey data is used in a variety of fields including Public Health, Economics, Political Science, and Data Science. The US Census, the National Health Interview Survey, The National Health and Nutrition Examination Survey, The California Health Interview Survey, Nielsen Ratings, and Election Polling are some examples of survey datasets.</p>
-<p>R is well suited to handle survey statistics using the “survey” package developed by Thomas Lumley. Lumley’s book <em>Complex Surveys: A Guide to Analysis Using R</em> is the main resource for this course, and it is highly recommended.</p>
-<p>*** =instructions - Run the code that installs and loads the survey package.</p>
+<p>R is well suited to handle survey statistics using the “survey” package developed by Professor Thomas Lumley. Lumley’s book <em>Complex Surveys: A Guide to Analysis Using R</em> is the main resource for this course, and it is highly recommended.</p>
+<p>*** =instructions</p>
+<ul>
+<li>Run the code that installs and loads the survey package.</li>
+</ul>
 <p>*** =sample_code</p>
 <pre class="r"><code>install.packages(&quot;survey&quot;)
 library(&quot;survey&quot;)</code></pre>
@@ -92,8 +97,14 @@ success_msg(&quot;Well done! Continue!&quot;)</code></pre>
 <p>Suppose a school takes a random sample of test scores of their students, and wants to estimate the average score across the school’s entire population.</p>
 <p>Lets say their are <span class="math inline">\(1000\)</span> students at the school and you sample <span class="math inline">\(200\)</span> of them. Each student has an equal probability of being selected into the sample.</p>
 <p>What is the probability, <span class="math inline">\(\pi_i\)</span>, that any one student is sampled?</p>
-<p>*** =instructions - <span class="math display">\[\frac{1}{4}\]</span> - <span class="math display">\[\frac{1}{5}\]</span> - <span class="math display">\[\frac{1}{2}\]</span> - <span class="math display">\[\frac{1}{3}\]</span></p>
-<p>*** =hint What is 200 divided by 1000?</p>
+<p>*** =instructions</p>
+<ul>
+<li><span class="math inline">\(\frac{1}{4}\)</span></li>
+<li><span class="math inline">\(\frac{1}{5}\)</span></li>
+<li><span class="math inline">\(\frac{1}{2}\)</span></li>
+<li><span class="math inline">\(\frac{1}{3}\)</span></li>
+</ul>
+<p>*** =hint What is <span class="math inline">\(200\)</span> divided by <span class="math inline">\(1000\)</span>?</p>
 <p>*** =sct</p>
 <pre class="r"><code>msg1 = &quot;Nope. Try again&quot;
 msg2 = &quot;Well done!&quot;
@@ -104,11 +115,16 @@ test_mc(correct = 2, feedback_msgs = c(msg1,msg2,msg1,msg1))</code></pre>
 <div id="sampling-weights" class="section level2">
 <h2>Sampling Weights</h2>
 <p>One of the main concepts of survey statistics is sampling weights. The formula for sampling weights is</p>
-<p><span class="math display">\[ sampling weight=\frac{1}{\pi_i} \]</span></p>
+<p><span class="math display">\[ \text{sampling weight}=\frac{1}{\pi_i} \]</span></p>
 <p>Where <span class="math inline">\(\pi_i\)</span> is the probability of person <em>i</em> being sampled.</p>
 <p>Consider the example from the previous problem. Each student has a <span class="math inline">\(\pi_i=\frac{1}{5}\)</span> so the sampling weight equals <span class="math inline">\(5\)</span>.</p>
-<p>*** =instructions - Already loaded is a dataset with the test scores of 200 students. - Look at the first 5 rows and the structure of the dataset. - Set the variable <code>{r} samplingWeight</code> equal to the correct value.</p>
-<p>*** =hint If you don’t remember the head and str functions use ?</p>
+<p>*** =instructions</p>
+<ul>
+<li>Already loaded is a dataset with the test scores of <span class="math inline">\(200\)</span> students.</li>
+<li>Look at the first <span class="math inline">\(5\)</span> rows and the structure of the dataset.</li>
+<li>Set the variable <code>samplingWeight</code> equal to the correct value.</li>
+</ul>
+<p>*** =hint If you don’t remember the <code>head</code> and <code>str</code> functions use <code>?</code></p>
 <p>*** =pre_exercise_code</p>
 <pre class="r"><code>schoolkids &lt;- read.csv(&quot;childdata.csv&quot;)</code></pre>
 <p>*** =sample_code</p>
@@ -140,15 +156,23 @@ test_object(str(schoolkids), undefined_msg=&quot;Please look at the structure of
 test_object(samplingWeight&lt;-5, undefined_msg=&quot;Please assign a value to &lt;code&gt;samplingWeight&lt;\code&gt;.&quot;,
             incorrect_msg=&quot;Did you assign the correct value to &lt;code&gt;samplingWeight&lt;\code&gt;?&quot;)
 success_msg(&quot;Great! Head over to the next exercise.&quot;)</code></pre>
+<p>— type:VideoExercise aspect_ratio:62.5 xp:50 ## Estimates and Variances</p>
+<p>*** =video_link</p>
 <p>—type:NormalExercise xp:100</p>
 </div>
 <div id="horvits-thompson-estimator" class="section level2">
 <h2>Horvits-Thompson Estimator</h2>
 <p>The Horvits-Thompson estimator approximates the population total by summing the weighted observations. Continueing with the previous example, the formula for the Horvits-Thompson estimator of total student test scores is</p>
 <p><span class="math display">\[E[T_{score}]=\sum\limits_{i=1}^N \frac{1}{\pi_i} * score_i * \pi_i=\sum\limits_{i=1}^N score_i= T_{score}\]</span></p>
-<p>*** =instructions - Add a variable to the dataset named <code>{r}samplingweight</code> that is equal to the <code>{r}samplingweight</code> variable you created in the last exercise.</p>
+<p>To estimate the total number of <span class="math inline">\(13\)</span> year olds you would need to sum the weights for all the sampled <span class="math inline">\(13\)</span> year olds like:</p>
+<p><code>sum(schoolkids$samplingWeight[schoolkids$age==13])</code></p>
+<p>This is the same as the above formula because the subsetting operation is equivalent to multiplying the weights by a binary variable where <span class="math inline">\(\text{yes student is } 13=1\)</span>, and <span class="math inline">\(\text{no student is not } 13=0\)</span>.</p>
+<p>*** =instructions</p>
+<ul>
+<li>Add a variable to the dataset named <code>samplingweight</code> that is equal to the <code>samplingweight</code> variable you created in the last exercise.</li>
+</ul>
 <p>-Using the Horvits-Thompson Estimator, predict the total number of boys and girls at the school.</p>
-<p>*** =hint The Horvits-Thompson Estimator formula in <em>R</em> code looks like <code>{r} samplingWeight*sum(x)</code></p>
+<p>*** =hint The Horvits-Thompson Estimator formula in <em>R</em> code looks like <code>samplingWeight*sum(x)</code></p>
 <p>*** =pre_exercise_code</p>
 <pre class="r"><code>schoolkids &lt;- read.csv(&quot;childdata.csv&quot;)
 samplingWeight &lt;- 5</code></pre>
@@ -171,8 +195,8 @@ totalFemales &lt;- _____
 schoolkids$samplingWeight &lt;- samplingWeight
 
 # Assign the sum of the students' scores multiplied by their weights
-totalMales &lt;- samplingWeight*sum(schoolkids$gender==&quot;Male&quot;)
-totalFemales &lt;- samplingWeight*sum(schoolkids$gender==&quot;Female&quot;)
+totalMales &lt;- sum(schoolkids$samplingWeight[schoolkids$gender==&quot;Male&quot;])
+totalFemales &lt;- sum(schoolkids$samplingWeight[schoolkids$gender==&quot;Female&quot;])
 # Print out the results
 totalMales
 totalFemales</code></pre>
@@ -180,12 +204,12 @@ totalFemales</code></pre>
 <pre class="r"><code>test_object(schoolkids$samplingWeight&lt;-samplingWeight, 
             undefined_msg = &quot;Did you assign a value to &lt;code&gt;schoolkids$samplingWeight&lt;\code&gt;?&quot;,
             incorrect_msg = &quot;Did you use &lt;code&gt;samplingWeight&lt;\code&gt;?&quot;)
-test_object(totalMales&lt;-samplingWeight*sum(schoolkids$gender==&quot;Male&quot;), 
+test_object(totalMales &lt;- sum(schoolkids$samplingWeight[schoolkids$gender==&quot;Male&quot;]), 
             undefined_msg = &quot;Did you assign a value to &lt;code&gt;totalMales&lt;\code&gt;?&quot;,
-            incorrect_msg = &quot;Did you use &lt;code&gt;samplingWeight&lt;\code&gt; times the number of males in the sample?&quot;)
-test_object(totalFemales&lt;-samplingWeight*sum(schoolkids$gender==&quot;Female&quot;), 
+            incorrect_msg = &quot;Did you sum the &lt;code&gt;samplingWeight&lt;\code&gt; for the males in the sample?&quot;)
+test_object(totalFemales &lt;- sum(schoolkids$samplingWeight[schoolkids$gender==&quot;Female&quot;]), 
             undefined_msg = &quot;Did you assign a value to &lt;code&gt;totalFemales&lt;\code&gt;?&quot;,
-            incorrect_msg = &quot;Did you use &lt;code&gt;samplingWeight&lt;\code&gt; times the number of females in the sample?&quot;)
+            incorrect_msg = &quot;Did you sum the &lt;code&gt;samplingWeight&lt;\code&gt; for the females in the sample?&quot;)
 test_object(totalMales), 
             undefined_msg = &quot;Did you print &lt;code&gt;totalMales&lt;\code&gt;?&quot;,
             incorrect_msg = &quot;Did you use &lt;code&gt;samplingWeight&lt;\code&gt; times the number of males in the sample?&quot;)
@@ -203,9 +227,13 @@ success_msg(&quot;Great! But remember that our result is just an estimate.&quot;
 <p>The formula for the variance of the Horvits-Thompson Estimator where you have a simple random sample of n from N:</p>
 <p><span class="math display">\[ var[T_x]=\frac{(N-n)}{N}*N^2*\frac{var(x)}{n} \]</span></p>
 <p>Showing that the second formula is equivalent to the first for a simple random sample is an extra credit exercise left to you.</p>
-<p>The standard error is the square root of the variance. You can build 95% confidence intervals by addind and substracting <span class="math inline">\(1.96*standard error\)</span> from the total estimate.</p>
-<p>*** =instructions - Using the formula for the variance of the Horvits-Thompson estimator for a simple random sample, find the standard error for gender. - Then use the standard error to find confidence intervals for the total number of boys and girls.</p>
-<p>*** =hint Remember the sample has 200 out of 1000 people. Also remember the var(x) from the formula is equivalent to <code>{r} var(schoolkids$gender)</code></p>
+<p>The standard error is the square root of the variance. You can build 95% confidence intervals by addind and substracting <span class="math inline">\(1.96*\text{standard error}\)</span> from the total estimate.</p>
+<p>*** =instructions</p>
+<ul>
+<li>Using the formula for the variance of the Horvits-Thompson estimator for a simple random sample, find the standard error for gender.</li>
+<li>Then use the standard error to find confidence intervals for the total number of boys and girls.</li>
+</ul>
+<p>*** =hint Remember the sample has 200 out of 1000 people. Also remember the var(x) from the formula is equivalent to <code>var(schoolkids$gender)</code></p>
 <p>*** =pre_exercise_code</p>
 <pre class="r"><code>schoolkids &lt;- read.csv(&quot;childdata.csv&quot;)
 schoolkids$samplingWeight &lt;- 5
@@ -247,40 +275,46 @@ femaleUpperCI
 femaleLowerCI</code></pre>
 <p>*** =sct</p>
 <pre class="r"><code>test_object(stdErrGender&lt;-sqrt(((1000-200)/1000)*1000^2*(var(schoolkids$gender)/200)), 
-            undefined_msg = &quot;&quot;,
-            incorrect_msg = &quot;&quot;)
-test_object(maleUpperCI&lt;-1.96*stdErrGender+totalMales, 
-            undefined_msg = &quot;&quot;,
-            incorrect_msg = &quot;&quot;)
-test_object(maleLowerCI&lt;-1.96*stdErrGender-totalMales, 
-            undefined_msg = &quot;&quot;,
-            incorrect_msg = &quot;&quot;)
-test_object(femaleUpperCI&lt;-1.96*stdErrGender+totalFemales, 
-            undefined_msg = &quot;&quot;,
-            incorrect_msg = &quot;&quot;)
-test_object(femaleLowerCI&lt;-1.96*stdErrGender-totalFemales, 
-            undefined_msg = &quot;&quot;,
-            incorrect_msg = &quot;&quot;)
-test_object(maleUpperCI, 
-            undefined_msg = &quot;&quot;,
-            incorrect_msg = &quot;&quot;)
-test_object(maleLowerCI, 
-            undefined_msg = &quot;&quot;,
-            incorrect_msg = &quot;&quot;)
-test_object(femaleUpperCI, 
-            undefined_msg = &quot;&quot;,
-            incorrect_msg = &quot;&quot;)
-test_object(femaleLowerCI, 
-            undefined_msg = &quot;&quot;,
-            incorrect_msg = &quot;&quot;)
+            undefined_msg = &quot;Make sure to solve for the standard error for the gender variable&quot;,
+            incorrect_msg = &quot;Look at the formula give above for a simple random sample. Use the hint if you need help.&quot;)
 
-success_msg(&quot;Great! &quot;)</code></pre>
+test_object(maleUpperCI&lt;-1.96*stdErrGender+totalMales, 
+            undefined_msg = &quot;Make sure to solve for the male upper confidence interval.&quot;,
+            incorrect_msg = &quot;Remember that the upper CI is 1.96 times the standard error plus the estimated value.&quot;)
+test_object(maleLowerCI&lt;-1.96*stdErrGender-totalMales, 
+            undefined_msg = &quot;Make sure to solve for the male lower confidence interval.&quot;,
+            incorrect_msg = &quot;Remember that the lower CI is 1.96 times the standard error minus the estimated value.&quot;)
+test_object(femaleUpperCI&lt;-1.96*stdErrGender+totalFemales, 
+            undefined_msg = &quot;Make sure to solve for the female upper confidence interval.&quot;,
+            incorrect_msg = &quot;Remember that the upper CI is 1.96 times the standard error plus the estimated value.&quot;)
+test_object(femaleLowerCI&lt;-1.96*stdErrGender-totalFemales, 
+            undefined_msg = &quot;Make sure to solve for the female lower confidence interval.&quot;,
+            incorrect_msg = &quot;Remember that the lower CI is 1.96 times the standard error minus the estimated value.&quot;)
+test_object(maleUpperCI, 
+            undefined_msg = &quot;Remember to print the male upper CI&quot;,
+            incorrect_msg = &quot;Did you print the correct intervals?&quot;)
+test_object(maleLowerCI, 
+            undefined_msg = &quot;Remember to print the male lower CI&quot;,
+            incorrect_msg = &quot;Did you print the correct intervals?&quot;)
+test_object(femaleUpperCI, 
+            undefined_msg = &quot;Remember to print the female upper CI&quot;,
+            incorrect_msg = &quot;Did you print the correct intervals?&quot;)
+test_object(femaleLowerCI, 
+            undefined_msg = &quot;Remember to print the female lower CI&quot;,
+            incorrect_msg = &quot;Did you print the correct intervals?&quot;)
+
+success_msg(&quot;Great Job!&quot;)</code></pre>
 <p>—type:MultipleChoiceExercise xp:100</p>
 </div>
 <div id="statistical-significance" class="section level2">
 <h2>Statistical Significance</h2>
 <p>After looking at the confidence intervals for the number of boys and girls, determine whether the distribution of males and females in our sample is statistically significantly different than an exactly half male, half female population.</p>
-<p>*** =instructions - The difference is boys and girls in our population is statistically significantly different than a half male, half female population - The difference is boys and girls in our population is NOT statistically significantly different than a half male, half female population - No way to tell</p>
+<p>*** =instructions</p>
+<ul>
+<li>The difference is boys and girls in our population is statistically significantly different than a half male, half female population</li>
+<li>The difference is boys and girls in our population is NOT statistically significantly different than a half male, half female population</li>
+<li>No way to tell</li>
+</ul>
 <p>*** =hint Is 500 in the confidence interval for boys and girls?</p>
 <p>*** =pre_exercise_code</p>
 <pre class="r"><code>schoolkids &lt;- read.csv(&quot;childdata.csv&quot;)
@@ -314,8 +348,11 @@ test_mc(correct = 1, feedback_msgs = c(msg2,msg1,msg1))</code></pre>
 <p>Notice that the estiamte for the population average is equal to the sample average. The more interesting formula is the variance of the population for a var x:</p>
 <p><span class="math display">\[ var[\mu_x]=\frac{N-n}{N}*\frac{var[x]}{n} \]</span></p>
 <p>The formula is almost the same as the variance for the Horvits-Thompson total, but the <span class="math inline">\(N^2\)</span> term is dropped.</p>
-<p>*** =instructions - Build 95% confidence intervals for the mean test score of the total student population.</p>
-<p>*** =hint</p>
+<p>*** =instructions</p>
+<ul>
+<li>Build 95% confidence intervals for the mean test score of the total student population.</li>
+</ul>
+<p>*** =hint Use the formula above to find <code>testVar</code>; remember that the survey is of 200 students out of 1000. Then estimate the confidence intervals by multiplying <code>testVar</code> by <span class="math inline">\(1.96\)</span> and addind and subtracting the result from the estimate.</p>
 <p>*** =pre_exercise_code</p>
 <pre class="r"><code>schoolkids &lt;- read.csv(&quot;childdata.csv&quot;)
 schoolkids$samplingWeight &lt;- 5
@@ -350,30 +387,32 @@ testHi
 testLow</code></pre>
 <p>*** =sct</p>
 <pre class="r"><code>test_object(testAverage &lt;- mean(schoolkids$score), 
-            undefined_msg = &quot;&quot;,
-            incorrect_msg = &quot;&quot;)
+            undefined_msg = &quot;Did you find the test mean?&quot;,
+            incorrect_msg = &quot;Remember that the mean for the survey is same as the regular mean&quot;)
 test_object(testVar &lt;- ((1000-200)/1000)*var(schoolkids$score)/n, 
-            undefined_msg = &quot;&quot;,
-            incorrect_msg = &quot;&quot;)
+            undefined_msg = &quot;Did you find the test variance?&quot;,
+            incorrect_msg = &quot;If you are having trouble finding the variance, use the hint.&quot;)
 test_object(testHi &lt;- 1.96*testVar+testAverage, 
-            undefined_msg = &quot;&quot;,
-            incorrect_msg = &quot;&quot;)
+            undefined_msg = &quot;Did you find the upper CI?&quot;,
+            incorrect_msg = &quot;Use the hint if you are having trouble finding the CI.&quot;)
 test_object(testLow &lt;- 1.96*testVar-testAverage, 
-            undefined_msg = &quot;&quot;,
-            incorrect_msg = &quot;&quot;)
+            undefined_msg = &quot;Did you find the lower CI?&quot;,
+            incorrect_msg = &quot;Use the hint if you are having trouble finding the CI.&quot;)
 test_object(testHi, 
-            undefined_msg = &quot;&quot;,
-            incorrect_msg = &quot;&quot;)
+            undefined_msg = &quot;Did you remember to print the upper CI?&quot;,
+            incorrect_msg = &quot;Did you print the correct CI?&quot;)
 test_object(testLow, 
-            undefined_msg = &quot;&quot;,
-            incorrect_msg = &quot;&quot;)
+            undefined_msg = &quot;Did you remember to print the lower CI?&quot;,
+            incorrect_msg = &quot;Did you print the correct CI?&quot;)
 
 success_msg(&quot;Great! &quot;)</code></pre>
+<p>— type:VideoExercise aspect_ratio:62.5 xp:50 ## Introduction to R Package</p>
+<p>*** =video_link</p>
 <p>—type:NormalExercise xp:100</p>
 </div>
-<div id="introduction-to-the-r-survey-package" class="section level2">
-<h2>Introduction to the R Survey package</h2>
-<p>The R <code>{r} survey</code> package was designed by Thomas Lumley to make tasks like the one you did earlier much easier.</p>
+<div id="create-a-survey-object" class="section level2">
+<h2>Create a Survey Object</h2>
+<p>The R <code>survey</code> package was designed by Thomas Lumley to make tasks like the one you did earlier much easier.</p>
 <p>The first thing you will do is load the package, and create a survey object. Like so:</p>
 <pre class="r"><code>surveyobject &lt;- svydesign(id=~1, fpc=1000, data=schoolkids)
 
